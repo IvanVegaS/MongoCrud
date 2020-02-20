@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -52,7 +53,7 @@ public class MongoBasicController {
 	}
 
 	@ResponseStatus(value = HttpStatus.OK)
-	@PostMapping("/user/{id}")
+	@PutMapping("/user/{id}")
 	public User updateUser(@RequestBody CreateUserRequest request, @PathVariable String id) {
 		log.debug("Update user request - id=" + id + " " + request.toString());
 		return service.updateUser(request, id);
