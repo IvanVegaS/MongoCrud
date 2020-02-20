@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.client.HttpClientErrorException;
 
 import com.ivcoding.mongobasiccrud.domain.CreateUserRequest;
 import com.ivcoding.mongobasiccrud.model.User;
@@ -60,5 +62,24 @@ public class MongoBasicServiceImpl implements MongoBasicService {
 
 		log.debug("Records found on DB - " + users.toString());
 		return users;
+	}
+
+	@Override
+	public void deleteUser(String id) {
+		if (repository.existsById(id)) {
+			log.debug("Deleting user with id: " + id);
+			repository.deleteById(id);
+		} else
+			log.error("No user was found for the given id.");
+	}
+
+	@Override
+	public User updateUser(CreateUserRequest request, String id) {
+		if (!repository.existsById(id))
+			throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "No user found with the given id");
+		User user = new User();
+		user = orikaMapperFacade.map(request, User.class);
+		user.setId(id);
+		return repository.save(user);
 	}
 }

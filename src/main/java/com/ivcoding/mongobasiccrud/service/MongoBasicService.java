@@ -9,4 +9,8 @@ public interface MongoBasicService {
 	User createUser(CreateUserRequest request);
 
 	List<User> getUsers(String firstName, String phone);
+
+	void deleteUser(String id);
+
+	User updateUser(CreateUserRequest request, String id);
 }
