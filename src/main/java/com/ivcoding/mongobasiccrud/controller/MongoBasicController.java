@@ -26,7 +26,7 @@ public class MongoBasicController {
 	MongoBasicServiceImpl service;
 
 	@ResponseStatus(value = HttpStatus.OK)
-	@GetMapping("/grettings")
+	@GetMapping("/greetings")
 	public String grettings(@RequestParam(value = "name", defaultValue = "World") String name) {
 		return new String("Hello " + name + "!");
 	}
